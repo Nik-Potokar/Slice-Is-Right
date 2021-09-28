@@ -1,0 +1,12 @@
+{
+    "Author": "???",
+    "Name": "Bamboo Chopper",
+    "Punchline": "Shows where Bamboo falls.",
+    "Description": "Shows where Bamboo falls.",
+    "InternalName": "chopbamboo",
+    "DalamudApiLevel": 4,
+    "Tags": [
+        "gold saucer",
+        "yojimbo"
+    ]
+}
