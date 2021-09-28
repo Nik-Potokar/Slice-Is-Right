@@ -81,7 +81,7 @@ namespace SliceIsRight
                 {
                     // local player
                     //this.DebugObject(index, obj, model);
-                    //this.RenderObject(index, obj, 2010777);
+                    //this.RenderObject(index, obj, 2010779);
                 }
             }
         }
@@ -163,10 +163,10 @@ namespace SliceIsRight
 
         private void DrawFilledCircleWorld(Vector3 center, float radius, uint colour)
         {
-            int num = 100;
-            for (int index = 0; index <= 200; ++index)
+            int segmentCount = 100;
+            for (int index = 0; index <= 2 * segmentCount; ++index)
             {
-                GameGui.WorldToScreen(new Vector3(center.X + radius * (float)Math.Sin(Math.PI / num * index), center.Y, center.Z + radius * (float)Math.Cos(Math.PI / num * index)), out Vector2 vector2);
+                GameGui.WorldToScreen(new Vector3(center.X + radius * (float)Math.Sin(Math.PI / segmentCount * index), center.Y, center.Z + radius * (float)Math.Cos(Math.PI / segmentCount * index)), out Vector2 vector2);
                 ImGui.GetWindowDrawList().PathLineTo(vector2);
             }
             ImGui.GetWindowDrawList().PathFillConvex(colour);
@@ -174,57 +174,60 @@ namespace SliceIsRight
 
         private void DrawRectWorld(Vector3 center, float rotation, float length, float width, uint colour)
         {
-            Vector2 vector2_1 = ImGui.GetIO().DisplaySize;
-            Vector3 vector3_1 = new Vector3(center.X + width * 0.5f * (float)Math.Sin(Math.PI / 2.0 + rotation), center.Y, center.Z + width * 0.5f * (float)Math.Cos(Math.PI / 2.0 + rotation));
-            Vector3 vector3_2 = new Vector3(center.X + width * 0.5f * (float)Math.Sin(rotation - Math.PI / 2.0), center.Y, center.Z + width * 0.5f * (float)Math.Cos(rotation - Math.PI / 2.0));
-            Vector3 vector3_3 = new Vector3(center.X, center.Y, center.Z);
-            int num1 = 200;
-            double num2 = (double)length / (double)num1;
+            Vector2 displaySize = ImGui.GetIO().DisplaySize;
+            Vector3 near1 = new Vector3(center.X + width * 0.5f * (float)Math.Sin(Math.PI / 2.0 + rotation), center.Y, center.Z + width * 0.5f * (float)Math.Cos(Math.PI / 2.0 + rotation));
+            Vector3 near2 = new Vector3(center.X + width * 0.5f * (float)Math.Sin(rotation - Math.PI / 2.0), center.Y, center.Z + width * 0.5f * (float)Math.Cos(rotation - Math.PI / 2.0));
+            Vector3 nearCenter = new Vector3(center.X, center.Y, center.Z);
+            int rectangleCount = 20;
 
             var drawList = ImGui.GetWindowDrawList();
-            for (int index = 1; index <= num1; ++index)
+            for (int index = 1; index <= rectangleCount; ++index)
             {
-                Vector3 vector3_4 = vector3_1 = new Vector3((float)(vector3_1.X + length / (double)num1 * Math.Sin(0.0 + rotation)), vector3_1.Y, (float)(vector3_1.Z + length / (double)num1 * Math.Cos(0.0 + rotation)));
-                Vector3 vector3_5 = vector3_2 = new Vector3((float)(vector3_2.X + length / (double)num1 * Math.Sin(0.0 + rotation)), vector3_2.Y, (float)(vector3_2.Z + length / (double)num1 * Math.Cos(0.0 + rotation)));
-                Vector3 vector3_6 = vector3_3 = new Vector3((float)(vector3_3.X + length / (double)num1 * Math.Sin(0.0 + rotation)), vector3_3.Y, (float)(vector3_3.Z + length / (double)num1 * Math.Cos(0.0 + rotation)));
+                Vector3 far1 = new Vector3((float)(near1.X + length / (double)rectangleCount * Math.Sin(0.0 + rotation)), near1.Y, (float)(near1.Z + length / (double)rectangleCount * Math.Cos(0.0 + rotation)));
+                Vector3 far2 = new Vector3((float)(near2.X + length / (double)rectangleCount * Math.Sin(0.0 + rotation)), near2.Y, (float)(near2.Z + length / (double)rectangleCount * Math.Cos(0.0 + rotation)));
+                Vector3 farCenter = new Vector3((float)(nearCenter.X + length / (double)rectangleCount * Math.Sin(0.0 + rotation)), nearCenter.Y, (float)(nearCenter.Z + length / (double)rectangleCount * Math.Cos(0.0 + rotation)));
 
-                GameGui.WorldToScreen(vector3_5, out Vector2 vector2_2);
-                if (vector2_2.X > 0.0 & vector2_2.X < (double)vector2_1.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)vector2_1.Y)
+                GameGui.WorldToScreen(far2, out Vector2 vector2_2);
+                if (vector2_2.X > 0.0 & vector2_2.X < (double)displaySize.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)displaySize.Y)
                 {
                     drawList.PathLineTo(new Vector2((float)vector2_2.X, (float)vector2_2.Y));
                 }
 
-                GameGui.WorldToScreen(vector3_6, out vector2_2);
-                if (vector2_2.X > 0.0 & vector2_2.X < (double)vector2_1.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)vector2_1.Y)
+                GameGui.WorldToScreen(farCenter, out vector2_2);
+                if (vector2_2.X > 0.0 & vector2_2.X < (double)displaySize.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)displaySize.Y)
                 {
                     drawList.PathLineTo(new Vector2((float)vector2_2.X, (float)vector2_2.Y));
                 }
 
-                GameGui.WorldToScreen(vector3_4, out vector2_2);
-                if (vector2_2.X > 0.0 & vector2_2.X < (double)vector2_1.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)vector2_1.Y)
+                GameGui.WorldToScreen(far1, out vector2_2);
+                if (vector2_2.X > 0.0 & vector2_2.X < (double)displaySize.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)displaySize.Y)
                 {
                     drawList.PathLineTo(new Vector2((float)vector2_2.X, (float)vector2_2.Y));
                 }
 
-                GameGui.WorldToScreen(vector3_1, out vector2_2);
-                if (vector2_2.X > 0.0 & vector2_2.X < (double)vector2_1.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)vector2_1.Y)
+                GameGui.WorldToScreen(near1, out vector2_2);
+                if (vector2_2.X > 0.0 & vector2_2.X < (double)displaySize.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)displaySize.Y)
                 {
                     drawList.PathLineTo(new Vector2((float)vector2_2.X, (float)vector2_2.Y));
                 }
 
-                GameGui.WorldToScreen(vector3_3, out vector2_2);
-                if (vector2_2.X > 0.0 & vector2_2.X < (double)vector2_1.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)vector2_1.Y)
+                GameGui.WorldToScreen(nearCenter, out vector2_2);
+                if (vector2_2.X > 0.0 & vector2_2.X < (double)displaySize.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)displaySize.Y)
                 {
                     drawList.PathLineTo(new Vector2((float)vector2_2.X, (float)vector2_2.Y));
                 }
 
-                GameGui.WorldToScreen(vector3_2, out vector2_2);
-                if (vector2_2.X > 0.0 & vector2_2.X < (double)vector2_1.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)vector2_1.Y)
+                GameGui.WorldToScreen(near2, out vector2_2);
+                if (vector2_2.X > 0.0 & vector2_2.X < (double)displaySize.X | vector2_2.Y > 0.0 & vector2_2.Y < (double)displaySize.Y)
                 {
                     drawList.PathLineTo(new Vector2((float)vector2_2.X, (float)vector2_2.Y));
                 }
 
                 drawList.PathFillConvex(colour);
+
+                near1 = far1;
+                near2 = far2;
+                nearCenter = farCenter;
             }
         }
     }
