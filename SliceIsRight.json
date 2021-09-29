@@ -1,12 +1,13 @@
 {
     "Author": "Liza Carvelli",
-    "Name": "Bamboo Chopper",
+    "Name": "Slice is Right",
     "Punchline": "Shows where Bamboo falls.",
     "Description": "Shows where Bamboo falls.",
-    "InternalName": "chopbamboo",
+    "InternalName": "SliceIsRight",
     "DalamudApiLevel": 4,
     "Tags": [
         "gold saucer",
         "yojimbo"
-    ]
+    ],
+    "RepoUrl": "https://github.com/carvelli/Slice-Is-Right"
 }

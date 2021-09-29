@@ -85,7 +85,7 @@ namespace SliceIsRight
                 else if (ClientState.LocalPlayer?.ObjectId == obj.ObjectId)
                 {
                     // local player
-                    DebugObject(index, obj, model);
+                    //DebugObject(index, obj, model);
                     //RenderObject(index, obj, 2010779);
                 }
             }
