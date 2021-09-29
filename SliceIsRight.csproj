@@ -7,6 +7,7 @@
     <Description>Slice is Right.</Description>
     <Copyright></Copyright>
     <PackageProjectUrl>https://github.com/carvelli/SliceIsRight</PackageProjectUrl>
+    <Configurations>Release</Configurations>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,7 +18,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>$(AppData)\XIVLauncher\devPlugins\SliceIsRight\</OutputPath>
+    <OutputPath>dist</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
